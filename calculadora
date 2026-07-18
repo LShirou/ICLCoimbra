@@ -17,12 +17,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5}
-.secao{max-width:1020px;margin:0 auto;padding:40px 18px 48px}
+.secao{max-width:1020px;margin:0 auto;padding:40px 0 48px}
 .titulo{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6.5vw,46px);line-height:1.2;text-align:center;margin:0 auto 12px;max-width:720px;letter-spacing:-0.02em}
 .subtitulo{color:var(--ink2);font-family:var(--sans);font-size:clamp(16px,4vw,18px);text-align:center;max-width:660px;margin:0 auto 32px;line-height:1.55}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:0 10px 30px rgba(0,0,0,.28)}
 .grid{display:flex;flex-direction:column;gap:14px}
-/* Quando só tem 1 card no grid, ele ocupa toda a largura no desktop também */
 .grid.single .card{grid-column:1 / -1}
 .sec-title{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
 .field{display:flex;flex-direction:column;gap:6px}
@@ -74,12 +73,8 @@ input[type=range]:focus-visible{outline:2px solid var(--blue-hover);outline-offs
 .frase{margin-top:14px;padding:13px 15px;background:var(--elev);border-radius:10px;color:var(--ink2);font-size:14px;line-height:1.55}
 .frase b{color:var(--ink)}
 .vazio{color:var(--mut);text-align:center;padding:26px 8px;font-size:14px;line-height:1.6}
-.cta-wrap{text-align:center;margin-top:22px}
-.cta{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:16px;
-  padding:15px 30px;border-radius:12px;box-shadow:0 8px 24px rgba(62,143,216,.35)}
-.cta:active{transform:translateY(1px)}
 @media (min-width:760px){
-  .secao{padding:56px 24px 64px}
+  .secao{padding:56px 0 64px}
   .card{padding:26px}
   .grid{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;align-items:stretch}
   .tiles{grid-template-columns:repeat(3,1fr)}
@@ -105,24 +100,15 @@ input[type=range]:focus-visible{outline:2px solid var(--blue-hover);outline-offs
       <div class="fat-hoje" id="pj-fat-hoje">—</div>
       <div class="hint">valor da consulta × pacientes por semana × 4 semanas</div>
     </div>
-    <!-- SEGUNDO CARD: oculto até preencher -->
     <div class="card" id="card-proj" style="display:none">
       <div class="sec-title">Depois de implementar as estratégias</div>
       <div id="pj-proj"></div>
     </div>
   </div>
-  <!-- BLOCO DE COMPARAÇÃO: oculto até preencher -->
   <div id="pj-comp" style="display:none"></div>
-  <div class="cta-wrap" id="pj-cta-wrap" hidden>
-    <a class="cta" id="pj-cta" href="#">Quero implementar essas estratégias</a>
-  </div>
 </section>
 <script>
 'use strict';
-var CONFIG_PJ = {
-  ctaLink: '#oferta',
-  ctaTexto: 'Quero implementar essas estratégias'
-};
 var soDig = function (s) { return String(s == null ? '' : s).split('').filter(function (c) { return c >= '0' && c <= '9'; }).join(''); };
 var fmtBRL = function (v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); };
 var st = { ticket: 0, pac: 0, ticketNovo: 0, pacNovo: 0, aba: 'mes' };
@@ -136,8 +122,6 @@ var gridPrincipal = document.getElementById('grid-principal');
 function monta() {
   var t = st.ticket, p = st.pac;
   var valido = t > 0 && p > 0;
-
-  // Mostra ou oculta o segundo card e o bloco de comparação
   if (valido) {
     cardProj.style.display = '';
     elComp.style.display = '';
@@ -147,13 +131,11 @@ function monta() {
     elComp.style.display = 'none';
     gridPrincipal.classList.add('single');
   }
-
   document.getElementById('pj-fat-hoje').innerHTML = valido
     ? fmtBRL(t * p * 4) + ' <small>/mês</small>' : '—';
   if (!valido) {
     elProj.innerHTML = '<div class="vazio">Preencha o valor da consulta e os pacientes por semana<br>para liberar a sua projeção.</div>';
     elComp.innerHTML = '';
-    document.getElementById('pj-cta-wrap').setAttribute('hidden', '');
     ajustaAltura();
     return;
   }
@@ -233,22 +215,6 @@ function monta() {
   var setAba = function (a) { st.aba = a; tm.classList.toggle('on', a === 'mes'); ta.classList.toggle('on', a === 'ano'); atualiza(); };
   tm.addEventListener('click', function () { setAba('mes'); });
   ta.addEventListener('click', function () { setAba('ano'); });
-  var wrap = document.getElementById('pj-cta-wrap');
-  if (CONFIG_PJ.ctaLink) {
-    var cta = document.getElementById('pj-cta');
-    cta.setAttribute('href', CONFIG_PJ.ctaLink);
-    cta.textContent = CONFIG_PJ.ctaTexto;
-    if (CONFIG_PJ.ctaLink.indexOf('#') === 0 && window.frameElement) {
-      cta.addEventListener('click', function (e) {
-        e.preventDefault();
-        try {
-          var alvo = window.parent.document.querySelector(CONFIG_PJ.ctaLink);
-          if (alvo) alvo.scrollIntoView({ behavior: 'smooth' });
-        } catch (err) {}
-      });
-    }
-    wrap.removeAttribute('hidden');
-  }
   atualiza();
 }
 elTicket.addEventListener('input', function () {
