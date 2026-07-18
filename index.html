@@ -119,6 +119,16 @@ var elComp = document.getElementById('pj-comp');
 var cardProj = document.getElementById('card-proj');
 var gridPrincipal = document.getElementById('grid-principal');
 
+function ajustaAltura() {
+  var altura = document.documentElement.scrollHeight;
+  /* postMessage: envia a altura para o parent (funciona cross-origin) */
+  try { window.parent.postMessage({ type: 'resize', height: altura }, '*'); } catch(e) {}
+  /* fallback same-origin */
+  if (window.frameElement) {
+    window.frameElement.style.height = altura + 'px';
+  }
+}
+
 function monta() {
   var t = st.ticket, p = st.pac;
   var valido = t > 0 && p > 0;
@@ -230,14 +240,14 @@ elPac.addEventListener('input', function () {
   if (novo !== st.pac) { st.pac = novo; st.pacNovo = novo; }
   monta();
 });
-function ajustaAltura() {
-  if (!window.frameElement) return;
-  requestAnimationFrame(function () {
-    window.frameElement.style.height = document.documentElement.scrollHeight + 'px';
-  });
-}
-window.addEventListener('load', ajustaAltura);
+/* Observa mudanças de tamanho e avisa o parent dinamicamente */
+window.addEventListener('load', function() { setTimeout(ajustaAltura, 100); });
 window.addEventListener('resize', ajustaAltura);
+/* Observer para detectar quando elementos aparecem/desaparecem */
+if (window.MutationObserver) {
+  var obs = new MutationObserver(ajustaAltura);
+  obs.observe(document.getElementById('cx-projecao-app'), { childList: true, subtree: true, attributes: false });
+}
 monta();
 </script>
 </body>
