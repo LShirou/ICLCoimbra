@@ -1,57 +1,42 @@
-<!DOCTYPE html>
-<div style="width:100%;background:#0A1C30">
-<iframe title="Faça sua projeção de crescimento" style="width:100%;height:1500px;border:0;display:block" srcdoc="&lt;!DOCTYPE html>
-&lt;html lang=&quot;pt-BR&quot;>
-&lt;head>
-&lt;meta charset=&quot;UTF-8&quot;>
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-&lt;title>Faça sua projeção de crescimento&lt;/title>
-&lt;style>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faça sua projeção de crescimento</title>
+<style>
 :root{
   --page:#0A1C30; --card:#10263F; --elev:#16304C;
   --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
   --ink:#FFFFFF; --ink2:#B9C9DA; --mut:#8A97A5;
   --blue:#3E8FD8; --blue-hover:#5AA2E6;
   --track:#1C3D63; --cinza:#8A97A5;
-  --verde:#4FD44F;
+  --verde:#4FD44F; --vermelho:#F07575;
   --serif:Georgia,'Times New Roman',serif;
   --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5}
 .secao{max-width:1020px;margin:0 auto;padding:40px 18px 48px}
-
-.titulo{font-family:var(--serif);font-weight:700;font-size:clamp(26px,6.5vw,40px);line-height:1.15;text-align:center;margin:0 auto 14px;max-width:700px}
-.subtitulo{color:var(--ink2);font-size:clamp(14px,4vw,16.5px);text-align:center;max-width:640px;margin:0 auto 30px;line-height:1.55}
-
+.titulo{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6.5vw,46px);line-height:1.2;text-align:center;margin:0 auto 12px;max-width:720px;letter-spacing:-0.02em}
+.subtitulo{color:var(--ink2);font-family:var(--sans);font-size:clamp(16px,4vw,18px);text-align:center;max-width:660px;margin:0 auto 32px;line-height:1.55}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 18px;box-shadow:0 10px 30px rgba(0,0,0,.28)}
 .grid{display:flex;flex-direction:column;gap:14px}
+/* Quando só tem 1 card no grid, ele ocupa toda a largura no desktop também */
+.grid.single .card{grid-column:1 / -1}
 .sec-title{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
-
-/* trava: projeção e comparação ficam visíveis (altura estável) mas inativas até preencher */
-.trava{opacity:.42;pointer-events:none;filter:saturate(.7)}
-.lock-hint{font-size:12px;color:var(--blue-hover);font-weight:600;min-height:20px;margin-bottom:8px}
-
-/* campos */
 .field{display:flex;flex-direction:column;gap:6px}
 .field + .field{margin-top:14px}
 .field label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 .field input{background:var(--elev);border:1px solid var(--line2);border-radius:10px;color:var(--ink);font-size:16px;padding:13px 14px;width:100%}
 .field input::placeholder{color:var(--mut)}
 .field input:focus{border-color:var(--blue);outline:none}
-.reserva-oculta{visibility:hidden}
-
-.res-l{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-.res-v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px}
-.res-v small{font-size:13px;color:var(--mut);font-weight:600}
-.hint{color:var(--mut);font-size:11.5px;margin-top:4px;min-height:17px}
-.hint-2l{min-height:34px}
-
-/* sliders */
-.slider-row{margin-top:18px}
-.slider-row:first-of-type{margin-top:2px}
+.fat-hoje-l{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.fat-hoje{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px}
+.fat-hoje small{font-size:13px;color:var(--mut);font-weight:600}
+.hint{color:var(--mut);font-size:11.5px;margin-top:4px}
+.slider-row{margin-top:20px}
+.slider-row:first-of-type{margin-top:4px}
 .slider-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
 .slider-head label{font-size:12.5px;color:var(--ink2);font-weight:600}
 .slider-val{font-weight:700;font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -65,16 +50,14 @@ input[type=range]::-moz-range-track{height:6px;background:transparent}
 input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid var(--page);cursor:grab}
 input[type=range]:focus-visible{outline:2px solid var(--blue-hover);outline-offset:2px}
 .slider-minmax{display:flex;justify-content:space-between;font-size:11px;color:var(--mut);margin-top:6px}
-
-.proj-v{font-size:clamp(32px,9vw,42px);font-weight:700;line-height:1.1;margin-top:2px;font-variant-numeric:tabular-nums}
-
-/* comparativo */
+.proj-l{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.proj-v{font-size:clamp(32px,9vw,42px);font-weight:700;line-height:1.1;margin-top:2px}
+.proj-sub{color:var(--mut);font-size:12px;margin-top:4px}
 .comp-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .comp-head .sec-title{margin-bottom:0}
 .seg{display:inline-flex;background:var(--elev);border:1px solid var(--line2);border-radius:10px;padding:3px;gap:2px}
-.seg button{border:none;background:transparent;color:var(--ink2);font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;min-width:64px}
+.seg button{border:none;background:transparent;color:var(--ink2);font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer}
 .seg button.on{background:var(--blue);color:#fff}
-.field .seg{align-self:flex-start}
 .barras{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 .barra-row{display:grid;grid-template-columns:72px 1fr;gap:10px;align-items:center}
 .barra-nome{font-size:12px;color:var(--ink2);font-weight:600;text-align:right}
@@ -88,299 +71,208 @@ input[type=range]:focus-visible{outline:2px solid var(--blue-hover);outline-offs
 .tile .t-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700}
 .tile .t-v{font-size:21px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
 .t-v.pos{color:var(--verde)}
-.sub-comp{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin:20px 0 12px;padding-top:16px;border-top:1px solid var(--line)}
-.frase{margin-top:14px;padding:13px 15px;background:var(--elev);border-radius:10px;color:var(--ink2);font-size:14px;line-height:1.55;min-height:158px}
+.frase{margin-top:14px;padding:13px 15px;background:var(--elev);border-radius:10px;color:var(--ink2);font-size:14px;line-height:1.55}
 .frase b{color:var(--ink)}
-
-/* desktop */
+.vazio{color:var(--mut);text-align:center;padding:26px 8px;font-size:14px;line-height:1.6}
+.cta-wrap{text-align:center;margin-top:22px}
+.cta{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:16px;
+  padding:15px 30px;border-radius:12px;box-shadow:0 8px 24px rgba(62,143,216,.35)}
+.cta:active{transform:translateY(1px)}
 @media (min-width:760px){
   .secao{padding:56px 24px 64px}
-  .frase{min-height:96px}
   .card{padding:26px}
   .grid{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;align-items:stretch}
   .tiles{grid-template-columns:repeat(3,1fr)}
 }
-&lt;/style>
-&lt;/head>
-&lt;body>
-&lt;section class=&quot;secao&quot;>
-  &lt;h2 class=&quot;titulo&quot;>Faça sua projeção de crescimento.&lt;/h2>
-  &lt;p class=&quot;subtitulo&quot;>Veja qual será o resultado que você pode conquistar, depois que implementar estratégias de captação online e offline, e aumento do valor de consulta.&lt;/p>
-
-  &lt;div class=&quot;grid&quot;>
-    &lt;div class=&quot;card&quot;>
-      &lt;div class=&quot;sec-title&quot;>Seus números de hoje&lt;/div>
-      &lt;div class=&quot;field&quot;>
-        &lt;label for=&quot;pj-ticket&quot;>Valor da sua consulta hoje (R$)&lt;/label>
-        &lt;input id=&quot;pj-ticket&quot; inputmode=&quot;numeric&quot; autocomplete=&quot;off&quot; placeholder=&quot;Ex.: 300&quot;>
-      &lt;/div>
-      &lt;div class=&quot;field&quot;>
-        &lt;label for=&quot;pj-pac&quot;>Pacientes que você atende por semana&lt;/label>
-        &lt;input id=&quot;pj-pac&quot; inputmode=&quot;numeric&quot; autocomplete=&quot;off&quot; placeholder=&quot;Ex.: 8&quot;>
-      &lt;/div>
-      &lt;div class=&quot;field&quot;>
-        &lt;label for=&quot;pj-tempo&quot;>Quanto tempo dura sua consulta?&lt;/label>
-        &lt;input id=&quot;pj-tempo&quot; inputmode=&quot;numeric&quot; autocomplete=&quot;off&quot; placeholder=&quot;Insira o valor em minutos&quot;>
-      &lt;/div>
-      &lt;div class=&quot;field&quot;>
-        &lt;label>Você entrega dieta na hora?&lt;/label>
-        &lt;div class=&quot;seg&quot;>&lt;button type=&quot;button&quot; id=&quot;pj-da-sim&quot;>Sim&lt;/button>&lt;button type=&quot;button&quot; id=&quot;pj-da-nao&quot;>Não&lt;/button>&lt;/div>
-      &lt;/div>
-      &lt;div class=&quot;field reserva-oculta&quot; id=&quot;pj-campo-plano&quot;>
-        &lt;label for=&quot;pj-plano&quot;>Quantos minutos você leva para elaborar o plano alimentar de cada paciente?&lt;/label>
-        &lt;input id=&quot;pj-plano&quot; inputmode=&quot;numeric&quot; autocomplete=&quot;off&quot; placeholder=&quot;Ex.: 40&quot;>
-      &lt;/div>
-      &lt;div class=&quot;res-l&quot;>Seu faturamento hoje&lt;/div>
-      &lt;div class=&quot;res-v&quot; id=&quot;pj-fat-hoje&quot;>—&lt;/div>
-      &lt;div class=&quot;hint&quot;>valor da consulta × pacientes por semana × 4 semanas&lt;/div>
-      &lt;div class=&quot;res-l&quot;>O valor da sua hora hoje&lt;/div>
-      &lt;div class=&quot;res-v&quot; id=&quot;pj-hora-hoje&quot;>—&lt;/div>
-      &lt;div class=&quot;hint hint-2l&quot; id=&quot;pj-hora-hoje-det&quot;>preencha o tempo de consulta acima&lt;/div>
-    &lt;/div>
-
-    &lt;div class=&quot;card&quot; id=&quot;pj-card-proj&quot;>
-      &lt;div class=&quot;sec-title&quot;>Depois de implementar as estratégias&lt;/div>
-      &lt;div class=&quot;lock-hint&quot; id=&quot;pj-lock&quot;>Preencha seus números ao lado para liberar a projeção.&lt;/div>
-      &lt;div class=&quot;slider-row&quot;>
-        &lt;div class=&quot;slider-head&quot;>&lt;label for=&quot;pj-r-ticket&quot;>Novo valor da consulta&lt;/label>&lt;span class=&quot;slider-val&quot; id=&quot;pj-v-ticket&quot;>—&lt;/span>&lt;/div>
-        &lt;input type=&quot;range&quot; id=&quot;pj-r-ticket&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;0&quot; disabled aria-label=&quot;Novo valor da consulta&quot;>
-        &lt;div class=&quot;slider-minmax&quot;>&lt;span id=&quot;pj-min-t&quot;>—&lt;/span>&lt;span id=&quot;pj-max-t&quot;>—&lt;/span>&lt;/div>
-      &lt;/div>
-      &lt;div class=&quot;slider-row&quot;>
-        &lt;div class=&quot;slider-head&quot;>&lt;label for=&quot;pj-r-pac&quot;>Pacientes por semana com captação&lt;/label>&lt;span class=&quot;slider-val&quot; id=&quot;pj-v-pac&quot;>—&lt;/span>&lt;/div>
-        &lt;input type=&quot;range&quot; id=&quot;pj-r-pac&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;0&quot; disabled aria-label=&quot;Pacientes por semana com captação&quot;>
-        &lt;div class=&quot;slider-minmax&quot;>&lt;span id=&quot;pj-min-p&quot;>—&lt;/span>&lt;span id=&quot;pj-max-p&quot;>—&lt;/span>&lt;/div>
-      &lt;/div>
-      &lt;div class=&quot;res-l&quot;>Seu faturamento projetado&lt;/div>
-      &lt;div class=&quot;proj-v&quot; id=&quot;pj-fat-novo&quot;>—&lt;/div>
-      &lt;div class=&quot;hint&quot; id=&quot;pj-sub&quot;>&lt;/div>
-      &lt;div class=&quot;res-l&quot;>O valor da sua hora projetado&lt;/div>
-      &lt;div class=&quot;res-v&quot; id=&quot;pj-hora-nova&quot;>—&lt;/div>
-      &lt;div class=&quot;hint hint-2l&quot; id=&quot;pj-hora-nova-det&quot;>entregando a dieta na hora, direto na consulta&lt;/div>
-    &lt;/div>
-  &lt;/div>
-
-  &lt;div class=&quot;card&quot; id=&quot;pj-card-comp&quot; style=&quot;margin-top:14px&quot;>
-    &lt;div class=&quot;comp-head&quot;>
-      &lt;div class=&quot;sec-title&quot;>Compare o antes e o depois&lt;/div>
-      &lt;div class=&quot;seg&quot; role=&quot;tablist&quot;>&lt;button id=&quot;pj-tab-mes&quot; role=&quot;tab&quot; class=&quot;on&quot;>Mensal&lt;/button>&lt;button id=&quot;pj-tab-ano&quot; role=&quot;tab&quot;>Em 1 ano&lt;/button>&lt;/div>
-    &lt;/div>
-    &lt;div class=&quot;barras&quot;>
-      &lt;div class=&quot;barra-row&quot;>&lt;span class=&quot;barra-nome&quot;>Hoje&lt;/span>&lt;div class=&quot;barra-line&quot;>&lt;div class=&quot;barra atual&quot; id=&quot;pj-bar-a&quot; style=&quot;width:0&quot;>&lt;/div>&lt;span class=&quot;barra-lbl&quot; id=&quot;pj-lbl-a&quot;>—&lt;/span>&lt;/div>&lt;/div>
-      &lt;div class=&quot;barra-row&quot;>&lt;span class=&quot;barra-nome&quot;>Projetado&lt;/span>&lt;div class=&quot;barra-line&quot;>&lt;div class=&quot;barra nova&quot; id=&quot;pj-bar-n&quot; style=&quot;width:0&quot;>&lt;/div>&lt;span class=&quot;barra-lbl&quot; id=&quot;pj-lbl-n&quot;>—&lt;/span>&lt;/div>&lt;/div>
-    &lt;/div>
-    &lt;div class=&quot;tiles&quot; id=&quot;pj-tiles&quot;>
-      &lt;div class=&quot;tile&quot;>&lt;div class=&quot;t-l&quot; id=&quot;pj-t1-l&quot;>A mais por mês&lt;/div>&lt;div class=&quot;t-v&quot; id=&quot;pj-t1-v&quot;>—&lt;/div>&lt;/div>
-      &lt;div class=&quot;tile&quot;>&lt;div class=&quot;t-l&quot; id=&quot;pj-t2-l&quot;>Crescimento&lt;/div>&lt;div class=&quot;t-v&quot; id=&quot;pj-t2-v&quot;>—&lt;/div>&lt;/div>
-      &lt;div class=&quot;tile&quot;>&lt;div class=&quot;t-l&quot; id=&quot;pj-t3-l&quot;>A mais em 12 meses&lt;/div>&lt;div class=&quot;t-v&quot; id=&quot;pj-t3-v&quot;>—&lt;/div>&lt;/div>
-    &lt;/div>
-    &lt;div class=&quot;sub-comp&quot;>O valor da sua hora&lt;/div>
-    &lt;div class=&quot;barras&quot;>
-      &lt;div class=&quot;barra-row&quot;>&lt;span class=&quot;barra-nome&quot;>Hoje&lt;/span>&lt;div class=&quot;barra-line&quot;>&lt;div class=&quot;barra atual&quot; id=&quot;pj-hbar-a&quot; style=&quot;width:0&quot;>&lt;/div>&lt;span class=&quot;barra-lbl&quot; id=&quot;pj-hlbl-a&quot;>—&lt;/span>&lt;/div>&lt;/div>
-      &lt;div class=&quot;barra-row&quot;>&lt;span class=&quot;barra-nome&quot;>Projetado&lt;/span>&lt;div class=&quot;barra-line&quot;>&lt;div class=&quot;barra nova&quot; id=&quot;pj-hbar-n&quot; style=&quot;width:0&quot;>&lt;/div>&lt;span class=&quot;barra-lbl&quot; id=&quot;pj-hlbl-n&quot;>—&lt;/span>&lt;/div>&lt;/div>
-    &lt;/div>
-    &lt;div class=&quot;hint hint-2l&quot; id=&quot;pj-hora-comp-det&quot;>preencha o tempo de consulta para comparar o valor da sua hora&lt;/div>
-    &lt;div class=&quot;frase&quot; id=&quot;pj-frase&quot;>Preencha seus números de hoje e arraste os controles para ver a sua projeção.&lt;/div>
-  &lt;/div>
-&lt;/section>
-
-&lt;script>
+</style>
+</head>
+<body>
+<section class="secao" id="cx-projecao-app">
+  <h2 class="titulo">Faça sua projeção de crescimento.</h2>
+  <p class="subtitulo">Veja qual será o resultado que você pode conquistar, depois que implementar estratégias de captação online e offline, e aumento do valor de consulta.</p>
+  <div class="grid single" id="grid-principal">
+    <div class="card">
+      <div class="sec-title">Seus números de hoje</div>
+      <div class="field">
+        <label for="pj-ticket">Valor da sua consulta hoje (R$)</label>
+        <input id="pj-ticket" inputmode="numeric" autocomplete="off" placeholder="Ex.: 300">
+      </div>
+      <div class="field">
+        <label for="pj-pac">Pacientes que você atende por semana</label>
+        <input id="pj-pac" inputmode="numeric" autocomplete="off" placeholder="Ex.: 12">
+      </div>
+      <div class="fat-hoje-l">Seu faturamento hoje</div>
+      <div class="fat-hoje" id="pj-fat-hoje">—</div>
+      <div class="hint">valor da consulta × pacientes por semana × 4 semanas</div>
+    </div>
+    <!-- SEGUNDO CARD: oculto até preencher -->
+    <div class="card" id="card-proj" style="display:none">
+      <div class="sec-title">Depois de implementar as estratégias</div>
+      <div id="pj-proj"></div>
+    </div>
+  </div>
+  <!-- BLOCO DE COMPARAÇÃO: oculto até preencher -->
+  <div id="pj-comp" style="display:none"></div>
+  <div class="cta-wrap" id="pj-cta-wrap" hidden>
+    <a class="cta" id="pj-cta" href="#">Quero implementar essas estratégias</a>
+  </div>
+</section>
+<script>
 'use strict';
-var soDig = function (s) { return String(s == null ? '' : s).split('').filter(function (c) { return c >= '0' &amp;&amp; c &lt;= '9'; }).join(''); };
+var CONFIG_PJ = {
+  ctaLink: '#oferta',
+  ctaTexto: 'Quero implementar essas estratégias'
+};
+var soDig = function (s) { return String(s == null ? '' : s).split('').filter(function (c) { return c >= '0' && c <= '9'; }).join(''); };
 var fmtBRL = function (v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); };
-var st = { ticket: 0, pac: 0, tempo: 0, plano: 0, dieta: '', ticketNovo: 0, pacNovo: 0, aba: 'mes' };
+var st = { ticket: 0, pac: 0, ticketNovo: 0, pacNovo: 0, aba: 'mes' };
+var elTicket = document.getElementById('pj-ticket');
+var elPac = document.getElementById('pj-pac');
+var elProj = document.getElementById('pj-proj');
+var elComp = document.getElementById('pj-comp');
+var cardProj = document.getElementById('card-proj');
+var gridPrincipal = document.getElementById('grid-principal');
 
-var $ = function (id) { return document.getElementById(id); };
-var elTicket = $('pj-ticket'), elPac = $('pj-pac'), elTempo = $('pj-tempo'), elPlano = $('pj-plano');
-var rT = $('pj-r-ticket'), rP = $('pj-r-pac');
-
-function fill(el) {
-  var min = +el.min, max = +el.max, w = max > min ? (+el.value - min) / (max - min) * 100 : 0;
-  el.style.backgroundImage = 'linear-gradient(90deg, var(--blue) ' + w + '%, var(--track) ' + w + '%)';
-}
-
-function recalc() {
+function monta() {
   var t = st.ticket, p = st.pac;
-  var valido = t > 0 &amp;&amp; p > 0;
+  var valido = t > 0 && p > 0;
 
-  /* ---- cenário atual ---- */
-  $('pj-fat-hoje').innerHTML = valido ? fmtBRL(t * p * 4) + ' &lt;small>/mês&lt;/small>' : '—';
-  var minHoje = (valido &amp;&amp; st.tempo > 0) ? p * st.tempo + (st.dieta === 'nao' ? p * (st.plano || 0) : 0) : 0;
-  var horaHoje = minHoje > 0 ? (t * p) / (minHoje / 60) : 0;
-  if (horaHoje > 0) {
-    var hh = Math.floor(minHoje / 60), mm = minHoje % 60;
-    $('pj-hora-hoje').innerHTML = fmtBRL(horaHoje) + ' &lt;small>/hora&lt;/small>';
-    $('pj-hora-hoje-det').textContent = hh + 'h' + (mm ? (mm &lt; 10 ? '0' : '') + mm : '') + ' de trabalho por semana' +
-      (st.dieta === 'nao' &amp;&amp; st.plano > 0 ? ' — consultas + elaboração dos planos alimentares' : '');
+  // Mostra ou oculta o segundo card e o bloco de comparação
+  if (valido) {
+    cardProj.style.display = '';
+    elComp.style.display = '';
+    gridPrincipal.classList.remove('single');
   } else {
-    $('pj-hora-hoje').textContent = '—';
-    $('pj-hora-hoje-det').textContent = 'preencha o tempo de consulta acima';
+    cardProj.style.display = 'none';
+    elComp.style.display = 'none';
+    gridPrincipal.classList.add('single');
   }
 
-  /* ---- trava / libera projeção e comparação ---- */
-  $('pj-card-proj').classList.toggle('trava', !valido);
-  $('pj-card-comp').classList.toggle('trava', !valido);
-  $('pj-lock').textContent = valido ? '' : 'Preencha seus números ao lado para liberar a projeção.';
-  rT.disabled = !valido;
-  rP.disabled = !valido;
-
+  document.getElementById('pj-fat-hoje').innerHTML = valido
+    ? fmtBRL(t * p * 4) + ' <small>/mês</small>' : '—';
   if (!valido) {
-    $('pj-v-ticket').textContent = '—'; $('pj-v-pac').textContent = '—';
-    $('pj-min-t').textContent = '—'; $('pj-max-t').textContent = '—';
-    $('pj-min-p').textContent = '—'; $('pj-max-p').textContent = '—';
-    $('pj-fat-novo').textContent = '—'; $('pj-sub').textContent = '';
-    $('pj-hora-nova').textContent = '—';
-    $('pj-bar-a').style.width = '0'; $('pj-bar-n').style.width = '0';
-    $('pj-lbl-a').textContent = '—'; $('pj-lbl-n').textContent = '—';
-    $('pj-t1-v').textContent = '—'; $('pj-t2-v').textContent = '—'; $('pj-t3-v').textContent = '—';
-    $('pj-hbar-a').style.width = '0'; $('pj-hbar-n').style.width = '0';
-    $('pj-hlbl-a').textContent = '—'; $('pj-hlbl-n').textContent = '—';
-    $('pj-frase').innerHTML = 'Preencha seus números de hoje e arraste os controles para ver a sua projeção.';
-    fill(rT); fill(rP);
+    elProj.innerHTML = '<div class="vazio">Preencha o valor da consulta e os pacientes por semana<br>para liberar a sua projeção.</div>';
+    elComp.innerHTML = '';
+    document.getElementById('pj-cta-wrap').setAttribute('hidden', '');
     ajustaAltura();
     return;
   }
-
-  /* ---- faixas dos controles (teto: R$ 1.000 e 30 pacientes) ---- */
-  var tkMax = Math.max(1000, t + 200);
-  var pcMax = Math.max(30, p + 5);
-  if (!(st.ticketNovo >= t &amp;&amp; st.ticketNovo &lt;= tkMax)) st.ticketNovo = t;
-  if (!(st.pacNovo >= p &amp;&amp; st.pacNovo &lt;= pcMax)) st.pacNovo = p;
-  rT.min = t; rT.max = tkMax; rT.step = (t >= 1000 ? 25 : 5); rT.value = st.ticketNovo;
-  rP.min = p; rP.max = pcMax; rP.step = 1; rP.value = st.pacNovo;
-  $('pj-min-t').textContent = fmtBRL(t); $('pj-max-t').textContent = fmtBRL(tkMax);
-  $('pj-min-p').textContent = p; $('pj-max-p').textContent = pcMax;
-  fill(rT); fill(rP);
-
-  /* ---- projeção ---- */
-  var fa = t * p * 4, fn = st.ticketNovo * st.pacNovo * 4;
-  var dm = fn - fa;
-  var pc = fa > 0 ? Math.round((fn / fa - 1) * 100) : 0;
-  $('pj-v-ticket').textContent = fmtBRL(st.ticketNovo);
-  $('pj-v-pac').textContent = st.pacNovo + (st.pacNovo === 1 ? ' paciente' : ' pacientes');
-  $('pj-fat-novo').textContent = fmtBRL(fn);
-  $('pj-sub').textContent = 'com consulta a ' + fmtBRL(st.ticketNovo) + ' e ' + st.pacNovo + ' pacientes por semana';
-
-  /* hora projetada: dieta entregue na hora (sem levar plano para casa) */
-  var minNovo = st.tempo > 0 ? st.pacNovo * st.tempo : 0;
-  var horaNova = minNovo > 0 ? (st.ticketNovo * st.pacNovo) / (minNovo / 60) : 0;
-  $('pj-hora-nova').innerHTML = horaNova > 0 ? fmtBRL(horaNova) + ' &lt;small>/hora&lt;/small>' : '—';
-
-  /* ---- comparação ---- */
-  var ano = st.aba === 'ano';
-  var A = fa * (ano ? 12 : 1), N = fn * (ano ? 12 : 1), D = N - A;
-  var maxV = Math.max(A, N, 1);
-  $('pj-bar-a').style.width = 'calc((100% - 104px) * ' + (A / maxV).toFixed(4) + ')';
-  $('pj-bar-n').style.width = 'calc((100% - 104px) * ' + (N / maxV).toFixed(4) + ')';
-  $('pj-lbl-a').textContent = fmtBRL(A);
-  $('pj-lbl-n').textContent = fmtBRL(N);
-  var cls = D > 0 ? 't-v pos' : 't-v';
-  if (ano) {
-    $('pj-t1-l').textContent = 'Faturamento anual hoje'; $('pj-t1-v').textContent = fmtBRL(A); $('pj-t1-v').className = 't-v';
-    $('pj-t2-l').textContent = 'Faturamento anual projetado'; $('pj-t2-v').textContent = fmtBRL(N); $('pj-t2-v').className = 't-v';
-    $('pj-t3-l').textContent = 'A mais em 1 ano'; $('pj-t3-v').textContent = (D >= 0 ? '+' : '−') + fmtBRL(Math.abs(D)); $('pj-t3-v').className = cls;
-  } else {
-    $('pj-t1-l').textContent = 'A mais por mês'; $('pj-t1-v').textContent = (D >= 0 ? '+' : '−') + fmtBRL(Math.abs(D)); $('pj-t1-v').className = cls;
-    $('pj-t2-l').textContent = 'Crescimento'; $('pj-t2-v').textContent = (pc >= 0 ? '+' : '') + pc + '%'; $('pj-t2-v').className = cls;
-    $('pj-t3-l').textContent = 'A mais em 12 meses'; $('pj-t3-v').textContent = (D >= 0 ? '+' : '−') + fmtBRL(Math.abs(dm * 12)); $('pj-t3-v').className = cls;
+  var tkMax = Math.max(Math.ceil(t * 3 / 10) * 10, t + 300);
+  var pcMax = Math.max(Math.ceil(p * 2.5), p + 10);
+  if (!(st.ticketNovo >= t && st.ticketNovo <= tkMax)) st.ticketNovo = t;
+  if (!(st.pacNovo >= p && st.pacNovo <= pcMax)) st.pacNovo = p;
+  elProj.innerHTML =
+    '<div class="slider-row">' +
+      '<div class="slider-head"><label for="pj-r-ticket">Novo valor da consulta</label><span class="slider-val" id="pj-v-ticket"></span></div>' +
+      '<input type="range" id="pj-r-ticket" min="' + t + '" max="' + tkMax + '" step="' + (t >= 1000 ? 25 : 5) + '" value="' + st.ticketNovo + '" aria-label="Novo valor da consulta">' +
+      '<div class="slider-minmax"><span>' + fmtBRL(t) + '</span><span>' + fmtBRL(tkMax) + '</span></div></div>' +
+    '<div class="slider-row">' +
+      '<div class="slider-head"><label for="pj-r-pac">Pacientes por semana com captação</label><span class="slider-val" id="pj-v-pac"></span></div>' +
+      '<input type="range" id="pj-r-pac" min="' + p + '" max="' + pcMax + '" step="1" value="' + st.pacNovo + '" aria-label="Pacientes por semana com captação">' +
+      '<div class="slider-minmax"><span>' + p + '</span><span>' + pcMax + '</span></div></div>' +
+    '<div class="proj-l">Seu faturamento projetado</div>' +
+    '<div class="proj-v" id="pj-fat-novo"></div>' +
+    '<div class="proj-sub" id="pj-sub"></div>';
+  elComp.innerHTML =
+    '<div class="card" style="margin-top:14px"><div class="comp-head"><div class="sec-title">Compare o antes e o depois</div>' +
+    '<div class="seg" role="tablist"><button id="pj-tab-mes" role="tab" class="' + (st.aba === 'mes' ? 'on' : '') + '">Mensal</button>' +
+    '<button id="pj-tab-ano" role="tab" class="' + (st.aba === 'ano' ? 'on' : '') + '">Em 1 ano</button></div></div>' +
+    '<div class="barras">' +
+      '<div class="barra-row"><span class="barra-nome">Hoje</span><div class="barra-line"><div class="barra atual" id="pj-bar-a"></div><span class="barra-lbl" id="pj-lbl-a"></span></div></div>' +
+      '<div class="barra-row"><span class="barra-nome">Projetado</span><div class="barra-line"><div class="barra nova" id="pj-bar-n"></div><span class="barra-lbl" id="pj-lbl-n"></span></div></div>' +
+    '</div>' +
+    '<div class="tiles" id="pj-tiles"></div>' +
+    '<div class="frase" id="pj-frase"></div></div>';
+  var rT = document.getElementById('pj-r-ticket'), rP = document.getElementById('pj-r-pac');
+  var fill = function (el) {
+    var min = +el.min, max = +el.max, w = max > min ? (+el.value - min) / (max - min) * 100 : 0;
+    el.style.backgroundImage = 'linear-gradient(90deg, var(--blue) ' + w + '%, var(--track) ' + w + '%)';
+  };
+  var tile = function (l, v, cls) { return '<div class="tile"><div class="t-l">' + l + '</div><div class="t-v ' + (cls || '') + '">' + v + '</div></div>'; };
+  var atualiza = function () {
+    st.ticketNovo = +rT.value; st.pacNovo = +rP.value;
+    fill(rT); fill(rP);
+    var fa = t * p * 4, fn = st.ticketNovo * st.pacNovo * 4;
+    var dm = fn - fa;
+    var pc = fa > 0 ? Math.round((fn / fa - 1) * 100) : 0;
+    document.getElementById('pj-v-ticket').textContent = fmtBRL(st.ticketNovo);
+    document.getElementById('pj-v-pac').textContent = st.pacNovo + (st.pacNovo === 1 ? ' paciente' : ' pacientes');
+    document.getElementById('pj-fat-novo').textContent = fmtBRL(fn);
+    document.getElementById('pj-sub').textContent = 'com consulta a ' + fmtBRL(st.ticketNovo) + ' e ' + st.pacNovo + ' pacientes por semana';
+    var ano = st.aba === 'ano';
+    var A = fa * (ano ? 12 : 1), N = fn * (ano ? 12 : 1), D = N - A;
+    var maxV = Math.max(A, N, 1);
+    document.getElementById('pj-bar-a').style.width = 'calc((100% - 104px) * ' + (A / maxV).toFixed(4) + ')';
+    document.getElementById('pj-bar-n').style.width = 'calc((100% - 104px) * ' + (N / maxV).toFixed(4) + ')';
+    document.getElementById('pj-lbl-a').textContent = fmtBRL(A);
+    document.getElementById('pj-lbl-n').textContent = fmtBRL(N);
+    var cls = D > 0 ? 'pos' : '';
+    document.getElementById('pj-tiles').innerHTML = ano
+      ? tile('Faturamento anual hoje', fmtBRL(A), '') +
+        tile('Faturamento anual projetado', fmtBRL(N), '') +
+        tile('A mais em 1 ano', (D >= 0 ? '+' : '−') + fmtBRL(Math.abs(D)), cls)
+      : tile('A mais por mês', (D >= 0 ? '+' : '−') + fmtBRL(Math.abs(D)), cls) +
+        tile('Crescimento', (pc >= 0 ? '+' : '') + pc + '%', cls) +
+        tile('A mais em 12 meses', (D >= 0 ? '+' : '−') + fmtBRL(Math.abs(dm * 12)), cls);
+    document.getElementById('pj-frase').innerHTML = dm > 0
+      ? (ano
+        ? 'Em 12 meses: de <b>' + fmtBRL(A) + '</b> para <b>' + fmtBRL(N) + '</b> — <b>' + fmtBRL(D) + ' a mais em um ano</b> com as estratégias implementadas.'
+        : 'Com consulta a <b>' + fmtBRL(st.ticketNovo) + '</b> e <b>' + st.pacNovo + ' pacientes por semana</b>, você sai de <b>' + fmtBRL(fa) + '</b> para <b>' + fmtBRL(fn) + ' por mês</b> — <b>' + fmtBRL(dm) + ' a mais todo mês</b>.')
+      : 'Arraste os controles acima e veja o seu faturamento crescer.';
+    ajustaAltura();
+  };
+  var pend = false;
+  var atualizaRAF = function () {
+    if (pend) return;
+    pend = true;
+    requestAnimationFrame(function () { pend = false; atualiza(); });
+  };
+  rT.addEventListener('input', atualizaRAF);
+  rP.addEventListener('input', atualizaRAF);
+  var tm = document.getElementById('pj-tab-mes'), ta = document.getElementById('pj-tab-ano');
+  var setAba = function (a) { st.aba = a; tm.classList.toggle('on', a === 'mes'); ta.classList.toggle('on', a === 'ano'); atualiza(); };
+  tm.addEventListener('click', function () { setAba('mes'); });
+  ta.addEventListener('click', function () { setAba('ano'); });
+  var wrap = document.getElementById('pj-cta-wrap');
+  if (CONFIG_PJ.ctaLink) {
+    var cta = document.getElementById('pj-cta');
+    cta.setAttribute('href', CONFIG_PJ.ctaLink);
+    cta.textContent = CONFIG_PJ.ctaTexto;
+    if (CONFIG_PJ.ctaLink.indexOf('#') === 0 && window.frameElement) {
+      cta.addEventListener('click', function (e) {
+        e.preventDefault();
+        try {
+          var alvo = window.parent.document.querySelector(CONFIG_PJ.ctaLink);
+          if (alvo) alvo.scrollIntoView({ behavior: 'smooth' });
+        } catch (err) {}
+      });
+    }
+    wrap.removeAttribute('hidden');
   }
-
-  /* comparação do valor da hora */
-  if (horaHoje > 0 &amp;&amp; horaNova > 0) {
-    var maxH = Math.max(horaHoje, horaNova, 1);
-    $('pj-hbar-a').style.width = 'calc((100% - 104px) * ' + (horaHoje / maxH).toFixed(4) + ')';
-    $('pj-hbar-n').style.width = 'calc((100% - 104px) * ' + (horaNova / maxH).toFixed(4) + ')';
-    $('pj-hlbl-a').textContent = fmtBRL(horaHoje) + ' /h';
-    $('pj-hlbl-n').textContent = fmtBRL(horaNova) + ' /h';
-    $('pj-hora-comp-det').textContent = 'projetado: entregando a dieta na hora, direto na consulta';
-  } else {
-    $('pj-hbar-a').style.width = '0'; $('pj-hbar-n').style.width = '0';
-    $('pj-hlbl-a').textContent = '—'; $('pj-hlbl-n').textContent = '—';
-    $('pj-hora-comp-det').textContent = 'preencha o tempo de consulta para comparar o valor da sua hora';
-  }
-
-  /* frase */
-  var frase;
-  if (dm > 0) {
-    frase = ano
-      ? 'Em 12 meses: de &lt;b>' + fmtBRL(A) + '&lt;/b> para &lt;b>' + fmtBRL(N) + '&lt;/b> — &lt;b>' + fmtBRL(D) + ' a mais em um ano&lt;/b> com as estratégias implementadas.'
-      : 'Com consulta a &lt;b>' + fmtBRL(st.ticketNovo) + '&lt;/b> e &lt;b>' + st.pacNovo + ' pacientes por semana&lt;/b>, você sai de &lt;b>' + fmtBRL(fa) + '&lt;/b> para &lt;b>' + fmtBRL(fn) + ' por mês&lt;/b> — &lt;b>' + fmtBRL(dm) + ' a mais todo mês&lt;/b>.';
-    if (horaHoje > 0 &amp;&amp; horaNova > horaHoje)
-      frase += ' E a sua hora sai de &lt;b>' + fmtBRL(horaHoje) + '&lt;/b> para &lt;b>' + fmtBRL(horaNova) + '&lt;/b>, já entregando a dieta na hora.';
-  } else {
-    frase = 'Arraste os controles acima e veja o seu faturamento crescer.';
-  }
-  $('pj-frase').innerHTML = frase;
-  ajustaAltura();
+  atualiza();
 }
-
-var pend = false;
-function recalcRAF() {
-  if (pend) return;
-  pend = true;
-  requestAnimationFrame(function () { pend = false; recalc(); });
-}
-
 elTicket.addEventListener('input', function () {
   var d = soDig(elTicket.value).slice(0, 6);
   elTicket.value = d ? Number(d).toLocaleString('pt-BR') : '';
   var novo = parseInt(d, 10) || 0;
   if (novo !== st.ticket) { st.ticket = novo; st.ticketNovo = novo; }
-  recalc();
+  monta();
 });
 elPac.addEventListener('input', function () {
   elPac.value = soDig(elPac.value).slice(0, 3);
   var novo = parseInt(elPac.value, 10) || 0;
   if (novo !== st.pac) { st.pac = novo; st.pacNovo = novo; }
-  recalc();
+  monta();
 });
-elTempo.addEventListener('input', function () {
-  elTempo.value = soDig(elTempo.value).slice(0, 3);
-  st.tempo = parseInt(elTempo.value, 10) || 0;
-  recalc();
-});
-elPlano.addEventListener('input', function () {
-  elPlano.value = soDig(elPlano.value).slice(0, 3);
-  st.plano = parseInt(elPlano.value, 10) || 0;
-  recalc();
-});
-var daSim = $('pj-da-sim'), daNao = $('pj-da-nao');
-function setDieta(v) {
-  st.dieta = v;
-  daSim.classList.toggle('on', v === 'sim');
-  daNao.classList.toggle('on', v === 'nao');
-  /* o campo do plano ocupa o espaço desde o início (visibility) — nada salta na página */
-  $('pj-campo-plano').classList.toggle('reserva-oculta', v !== 'nao');
-  recalc();
-}
-daSim.addEventListener('click', function () { setDieta('sim'); });
-daNao.addEventListener('click', function () { setDieta('nao'); });
-
-rT.addEventListener('input', function () { st.ticketNovo = +rT.value; recalcRAF(); });
-rP.addEventListener('input', function () { st.pacNovo = +rP.value; recalcRAF(); });
-var tm = $('pj-tab-mes'), ta = $('pj-tab-ano');
-function setAba(a) { st.aba = a; tm.classList.toggle('on', a === 'mes'); ta.classList.toggle('on', a === 'ano'); recalc(); }
-tm.addEventListener('click', function () { setAba('mes'); });
-ta.addEventListener('click', function () { setAba('ano'); });
-
-/* Altura do iframe: estável por construção (layout completo desde o início) e
-   sincronizada continuamente com a página-mãe (observador + verificação periódica). */
 function ajustaAltura() {
   if (!window.frameElement) return;
   requestAnimationFrame(function () {
-    var h = document.documentElement.scrollHeight;
-    if (Math.abs((parseInt(window.frameElement.style.height, 10) || 0) - h) > 2)
-      window.frameElement.style.height = h + 'px';
+    window.frameElement.style.height = document.documentElement.scrollHeight + 'px';
   });
 }
 window.addEventListener('load', ajustaAltura);
 window.addEventListener('resize', ajustaAltura);
-if (typeof ResizeObserver !== 'undefined') new ResizeObserver(ajustaAltura).observe(document.body);
-setInterval(ajustaAltura, 700);
-
-recalc();
-&lt;/script>
-&lt;/body>
-&lt;/html>
-"></iframe>
-</div>
+monta();
+</script>
+</body>
+</html>
